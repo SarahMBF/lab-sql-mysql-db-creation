@@ -18,10 +18,10 @@ USE `lab MySQL` ;
 -- Table `lab MySQL`.`Salespersons`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lab MySQL`.`Salespersons` (
-  ` staff_ID` INT NOT NULL,
+  ` staff_id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `store` VARCHAR(45) NULL,
-  PRIMARY KEY (` staff_ID`))
+  PRIMARY KEY (` staff_id`))
 ENGINE = InnoDB;
 
 
@@ -29,7 +29,7 @@ ENGINE = InnoDB;
 -- Table `lab MySQL`.`Customers`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lab MySQL`.`Customers` (
-  ` customer_ID` INT NOT NULL,
+  ` customer_id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `phone_number` INT NULL,
   `email` VARCHAR(45) NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `lab MySQL`.`Customers` (
   `province` VARCHAR(45) NULL,
   `country` VARCHAR(45) NULL,
   `zip` INT NULL,
-  PRIMARY KEY (` customer_ID`))
+  PRIMARY KEY (` customer_id`))
 ENGINE = InnoDB;
 
 
@@ -47,20 +47,20 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lab MySQL`.`Invoices` (
   `invoice_number` INT NOT NULL,
-  `date` INT NULL,
-  `Salespersons_ staff_ID` INT NOT NULL,
-  `Customers_ customer_ID` INT NOT NULL,
+  `date` DATE NULL,
+  `Salespersons_ staff_id` INT NOT NULL,
+  `Customers_ customer_id` INT NOT NULL,
   PRIMARY KEY (`invoice_number`),
-  INDEX `fk_Invoices_Salespersons1_idx` (`Salespersons_ staff_ID` ASC) VISIBLE,
-  INDEX `fk_Invoices_Customers1_idx` (`Customers_ customer_ID` ASC) VISIBLE,
+  INDEX `fk_Invoices_Salespersons1_idx` (`Salespersons_ staff_id` ASC) VISIBLE,
+  INDEX `fk_Invoices_Customers1_idx` (`Customers_ customer_id` ASC) VISIBLE,
   CONSTRAINT `fk_Invoices_Salespersons1`
-    FOREIGN KEY (`Salespersons_ staff_ID`)
-    REFERENCES `lab MySQL`.`Salespersons` (` staff_ID`)
+    FOREIGN KEY (`Salespersons_ staff_id`)
+    REFERENCES `lab MySQL`.`Salespersons` (` staff_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Invoices_Customers1`
-    FOREIGN KEY (`Customers_ customer_ID`)
-    REFERENCES `lab MySQL`.`Customers` (` customer_ID`)
+    FOREIGN KEY (`Customers_ customer_id`)
+    REFERENCES `lab MySQL`.`Customers` (` customer_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -70,10 +70,11 @@ ENGINE = InnoDB;
 -- Table `lab MySQL`.`Cars`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `lab MySQL`.`Cars` (
-  `VIN` INT NOT NULL,
-  `manufacturer` VARCHAR(45) NULL,
-  `model` INT NULL,
+  `VIN` VARCHAR(45) NOT NULL,
+  `manufacturer` VARCHAR(50) NULL,
+  `model` VARCHAR(50) NULL,
   `year` INT NULL,
+  `color` VARCHAR(50) NULL,
   `Invoices_invoice_number` INT NOT NULL,
   PRIMARY KEY (`VIN`),
   INDEX `fk_Cars_Invoices1_idx` (`Invoices_invoice_number` ASC) VISIBLE,
