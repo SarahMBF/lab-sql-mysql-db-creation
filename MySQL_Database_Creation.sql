@@ -1,0 +1,90 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema lab MySQL
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema lab MySQL
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `lab MySQL` DEFAULT CHARACTER SET utf8 ;
+USE `lab MySQL` ;
+
+-- -----------------------------------------------------
+-- Table `lab MySQL`.`Salespersons`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lab MySQL`.`Salespersons` (
+  ` staff_ID` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `store` VARCHAR(45) NULL,
+  PRIMARY KEY (` staff_ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lab MySQL`.`Customers`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lab MySQL`.`Customers` (
+  ` customer_ID` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `phone_number` INT NULL,
+  `email` VARCHAR(45) NULL,
+  `address` VARCHAR(45) NULL,
+  `city` VARCHAR(45) NULL,
+  `province` VARCHAR(45) NULL,
+  `country` VARCHAR(45) NULL,
+  `zip` INT NULL,
+  PRIMARY KEY (` customer_ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lab MySQL`.`Invoices`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lab MySQL`.`Invoices` (
+  `invoice_number` INT NOT NULL,
+  `date` INT NULL,
+  `Salespersons_ staff_ID` INT NOT NULL,
+  `Customers_ customer_ID` INT NOT NULL,
+  PRIMARY KEY (`invoice_number`),
+  INDEX `fk_Invoices_Salespersons1_idx` (`Salespersons_ staff_ID` ASC) VISIBLE,
+  INDEX `fk_Invoices_Customers1_idx` (`Customers_ customer_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_Invoices_Salespersons1`
+    FOREIGN KEY (`Salespersons_ staff_ID`)
+    REFERENCES `lab MySQL`.`Salespersons` (` staff_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Invoices_Customers1`
+    FOREIGN KEY (`Customers_ customer_ID`)
+    REFERENCES `lab MySQL`.`Customers` (` customer_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `lab MySQL`.`Cars`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `lab MySQL`.`Cars` (
+  `VIN` INT NOT NULL,
+  `manufacturer` VARCHAR(45) NULL,
+  `model` INT NULL,
+  `year` INT NULL,
+  `Invoices_invoice_number` INT NOT NULL,
+  PRIMARY KEY (`VIN`),
+  INDEX `fk_Cars_Invoices1_idx` (`Invoices_invoice_number` ASC) VISIBLE,
+  CONSTRAINT `fk_Cars_Invoices1`
+    FOREIGN KEY (`Invoices_invoice_number`)
+    REFERENCES `lab MySQL`.`Invoices` (`invoice_number`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
